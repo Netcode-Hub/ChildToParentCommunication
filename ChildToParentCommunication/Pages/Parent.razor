@@ -1,0 +1,36 @@
+﻿@page "/"
+@using ChildToParentCommunication.Data
+
+<div class="container mb-5">
+    <div class="row">
+        @if (Products.Count > 0)
+        {
+            foreach (var item in Products)
+            {
+                <div class="col-auto m-2">
+                    <div class="card">
+                        <div class="card-header"> <span>@item.Name</span> </div>
+                    </div>
+                </div>
+            }
+        } 
+    </div>
+    <div class="row">
+        <span>@Product.Id   @Product.Name</span>
+    </div>
+</div>
+<Child HandleSendProductListEvent="ReceiveProductList" HandleSendProductEvent="ReceiveProduct"></Child>
+
+@code {
+    public List<Product> Products { get; set; } = new();
+    public Product Product { get; set; } = new();
+    private void ReceiveProductList(List<Product> products)
+    {
+        Products = products;
+    }
+    private void ReceiveProduct(Product product)
+    {
+        Product = product;
+    }
+
+}
